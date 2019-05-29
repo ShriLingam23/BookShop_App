@@ -15,12 +15,13 @@ router.post('/',(req,res)=>{
 })
 
 router.get('/',(req,res)=>{
-    BookSchema.find((err,books)=>{
-        if(!err){
-            res.status(200).send({'message':"Successfully retrived","data":books})
-        }else
-            res.status(400).send({'message':"Unsuccessful"+err})
-    })
+    BookSchema.find().populate('author').exec()
+        .then(
+            (books)=>res.status(200).send({'message':"Successfully retrived","data":books})
+        )
+        .catch(
+            (err)=>res.status(400).send({'message':"Unsuccessful"+err})
+        )
 })
 
 router.get('/:id',(req,res)=>{
