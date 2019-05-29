@@ -1,7 +1,11 @@
 import React from 'react';
+import {BrowserRouter,Route,Link} from 'react-router-dom';
+
 import logo from './logo.svg';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+
+import Home from './components/Home';
 
 function App() {
   return (
@@ -25,29 +29,11 @@ function App() {
             </div>
         </nav>
 
-        <main role="main" className="container" style={{marginTop:'100px'}}>
+        <BrowserRouter>
+            <Route path="/" component={Home}/>
 
-            <div className="jumbotron">
-                <h1 className="display-4">Author!</h1>
-                <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-                    attention to featured content or information.</p>
-                <hr className="my-4" />
-                    <p>It uses utility classes for typography and spacing to space content out within the larger
-                        container.</p>
-                    <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </div>
+        </BrowserRouter>
 
-            <div className="jumbotron">
-                <h1 className="display-4">Books!</h1>
-                <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra
-                    attention to featured content or information.</p>
-                <hr className="my-4" />
-                    <p>It uses utility classes for typography and spacing to space content out within the larger
-                        container.</p>
-                    <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-            </div>
-
-        </main>
     </div>
   );
 }
