@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {Link} from "react-router-dom";
 
 class Home extends Component{
 
@@ -13,7 +14,7 @@ class Home extends Component{
                     <hr className="my-4" />
                     <p>It uses utility classes for typography and spacing to space content out within the larger
                         container.</p>
-                    <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                    <Link to='/author/view' className="btn btn-primary btn-lg" href="#" role="button">View</Link>
                 </div>
 
                 <div className="jumbotron">
@@ -23,7 +24,8 @@ class Home extends Component{
                     <hr className="my-4" />
                     <p>It uses utility classes for typography and spacing to space content out within the larger
                         container.</p>
-                    <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                    <Link to='/book/add' className="btn btn-primary btn-lg" type="button">ADD</Link>
+                    <a className="btn btn-primary btn-lg" href="#" role="button" style={{margin:"50px"}}>VIEW</a>
                 </div>
 
             </main>

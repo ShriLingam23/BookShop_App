@@ -7,6 +7,10 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 import Home from './components/Home';
 
+import BookAdd from './components/Book/Book_Add';
+
+import AuthorView from './components/Author/Author_view';
+
 function App() {
   return (
     <div className="App">
@@ -30,7 +34,11 @@ function App() {
         </nav>
 
         <BrowserRouter>
-            <Route path="/" component={Home}/>
+            <Route exact path="/" component={Home}/>
+
+            <Route path="/book/add" component={BookAdd}/>
+
+            <Route path="/author/view" component={AuthorView}/>
 
         </BrowserRouter>
 
