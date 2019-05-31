@@ -4,8 +4,9 @@ import axios from "axios";
 import {IoIosBook} from 'react-icons/io'
 import {IoIosKey} from "react-icons/io";
 import {IoIosPerson} from "react-icons/io";
-
-
+import {IoIosPricetag} from "react-icons/io";
+import {IoIosCalendar} from "react-icons/io";
+import {IoIosPrint} from 'react-icons/io'
 
 class Book_Add extends Component{
 
@@ -34,7 +35,7 @@ class Book_Add extends Component{
 
         return this.state.authors.map((author)=>{
           return(
-              <option key={author._id}>{author.firstName}</option>
+              <option key={author._id}>{author.firstName +" "+author.lastName}</option>
           )
         })
     }
@@ -100,88 +101,62 @@ class Book_Add extends Component{
                         <label for="email">Price <span className="text-muted">in Rupees</span></label>
                         <div className='input-group'>
                             <div className='input-group-prepend'>
-                                <span></span>
+                                <span className="input-group-text"><IoIosPricetag/></span>
+                            </div>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="price"
+                                placeholder="Rs."
+                                required />
+                            <div className="invalid-feedback" style={{width: '100%'}}>
+                                Price is required.
                             </div>
 
                         </div>
                     </div>
 
                     <div className="mb-3">
-                        <label for="address">Address</label>
-                        <input type="text" className="form-control" id="address" placeholder="1234 Main St" required />
-                            <div className="invalid-feedback">
-                                Please enter your shipping address.
+                        <label>Year of publication</label>
+                        <div className='input-group'>
+                            <div className='input-group-prepend'>
+                                <span className="input-group-text"><IoIosCalendar/></span>
                             </div>
+                            <input
+                                type="number"
+                                className="form-control"
+                                id="year"
+                                placeholder="Year"
+                                required/>
+                            <div className="invalid-feedback" style={{width: '100%'}}>
+                                Year is required.
+                            </div>
+
+                        </div>
                     </div>
 
                     <div className="mb-3">
-                        <label for="address2">Address 2 <span className="text-muted">(Optional)</span></label>
-                        <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" />
+                        <label>Publisher</label>
+                        <div className='input-group'>
+                            <div className='input-group-prepend'>
+                                <span className="input-group-text"><IoIosPrint/></span>
+                            </div>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="publisher"
+                                placeholder="Publisher"
+                                required/>
+                            <div className="invalid-feedback" style={{width: '100%'}}>
+                                Publisher is required.
+                            </div>
+
+                        </div>
                     </div>
 
 
                     <hr className="mb-4" />
-                        <div className="custom-control custom-checkbox">
-                            <input type="checkbox" className="custom-control-input" id="same-address" />
-                                <label className="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-                        </div>
-                        <div className="custom-control custom-checkbox">
-                            <input type="checkbox" className="custom-control-input" id="save-info" />
-                                <label className="custom-control-label" for="save-info">Save this information for next time</label>
-                        </div>
-                        <hr className="mb-4" />
-
-                            <h4 className="mb-3">Payment</h4>
-
-                            <div className="d-block my-3">
-                                <div className="custom-control custom-radio">
-                                    <input id="credit" name="paymentMethod" type="radio" className="custom-control-input" checked required />
-                                        <label className="custom-control-label" for="credit">Credit card</label>
-                                </div>
-                                <div className="custom-control custom-radio">
-                                    <input id="debit" name="paymentMethod" type="radio" className="custom-control-input" required />
-                                        <label className="custom-control-label" for="debit">Debit card</label>
-                                </div>
-                                <div className="custom-control custom-radio">
-                                    <input id="paypal" name="paymentMethod" type="radio" className="custom-control-input" required />
-                                        <label className="custom-control-label" for="paypal">PayPal</label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-6 mb-3">
-                                    <label for="cc-name">Name on card</label>
-                                    <input type="text" className="form-control" id="cc-name" placeholder="" required />
-                                        <small className="text-muted">Full name as displayed on card</small>
-                                        <div className="invalid-feedback">
-                                            Name on card is required
-                                        </div>
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="cc-number">Credit card number</label>
-                                    <input type="text" className="form-control" id="cc-number" placeholder="" required />
-                                        <div className="invalid-feedback">
-                                            Credit card number is required
-                                        </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-3 mb-3">
-                                    <label for="cc-expiration">Expiration</label>
-                                    <input type="text" className="form-control" id="cc-expiration" placeholder="" required />
-                                        <div className="invalid-feedback">
-                                            Expiration date required
-                                        </div>
-                                </div>
-                                <div className="col-md-3 mb-3">
-                                    <label for="cc-cvv">CVV</label>
-                                    <input type="text" className="form-control" id="cc-cvv" placeholder="" required />
-                                        <div className="invalid-feedback">
-                                            Security code required
-                                        </div>
-                                </div>
-                            </div>
-                            <hr className="mb-4" />
-                                <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
                 </form>
             </div>
         )
