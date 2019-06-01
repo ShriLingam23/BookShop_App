@@ -13,10 +13,22 @@ class Book_Add extends Component{
     constructor(props){
         super(props);
         this.state={
-            authors:[]
+            authors:[],
+            bookName:'',
+            isbn:'',
+            author:'',
+            price:'',
+            year:'',
+            publisher:'',
+            aid:''
+
         }
 
         this.fillAuthor= this.fillAuthor.bind(this);
+        this.fieldValueChange= this.fieldValueChange.bind(this);
+        this.onFormSubmit= this.onFormSubmit.bind(this);
+
+        this.setAuthor= this.setAuthor.bind(this);
     }
 
     componentDidMount(){
@@ -35,19 +47,62 @@ class Book_Add extends Component{
 
         return this.state.authors.map((author)=>{
           return(
-              <option key={author._id}>{author.firstName +" "+author.lastName}</option>
+              <option key={author._id} data-aid={author.id}>{author.firstName +" "+author.lastName}</option>
           )
         })
+    }
+
+    fieldValueChange(e){
+        this.setState(
+            {[e.target.name]:e.target.value}
+        )
+    }
+
+    setAuthor(e){
+
+        var authorOption = document.getElementById('author');
+        var authorId=authorOption.selectedIndex;
+        this.setState(
+            {
+                author:e.target.value,
+                aid:this.state.authors[authorId-1]._id
+
+            }
+        )
+    }
+
+    onFormSubmit(e){
+        e.preventDefault();
+
+        const book={
+            bookName: this.state.bookName,
+            isbn: parseInt(this.state.isbn),
+            author: this.state.aid,
+            price:parseInt(this.state.price),
+            year:parseInt(this.state.year),
+            publisher: this.state.publisher
+        }
+
+        console.log(book)
+        axios.post('http://localhost:4000/book/',book)
+            .then(
+                (res)=>{
+                    console.log(res.data.message,res.data.data)
+                }
+            )
+
+
     }
 
     render() {
         return(
             <div className="container col-md-8 order-md-1" style={{marginTop:'100px',marginBottom:'50px'}}>
                 <h4 className="mb-3">New Book Add</h4>
-                <form className="needs-validation" novalidate>
+                <form className="needs-validation" onSubmit={this.onFormSubmit}>
                     <div className="row">
+
                         <div className="col-md-6 mb-3">
-                            <label htmlFor="username">Book Name</label>
+                            <label>Book Name</label>
                             <div className="input-group">
                                 <div className="input-group-prepend">
                                     <span className="input-group-text"><IoIosBook/></span>
@@ -55,7 +110,10 @@ class Book_Add extends Component{
                                 <input
                                     type="text"
                                     className="form-control"
-                                    id="username"
+                                    id="bookName"
+                                    name="bookName"
+                                    value={this.state.bookName}
+                                    onChange={this.fieldValueChange}
                                     placeholder="Book Name"
                                     required />
                                 <div className="invalid-feedback" style={{width: '100%'}}>
@@ -63,6 +121,7 @@ class Book_Add extends Component{
                                 </div>
                             </div>
                         </div>
+
                         <div className="col-md-6 mb-3">
                             <label htmlFor="username">ISBN Number</label>
                             <div className="input-group">
@@ -70,9 +129,12 @@ class Book_Add extends Component{
                                     <span className="input-group-text"><IoIosKey/></span>
                                 </div>
                                 <input
-                                    type="text"
+                                    type="number"
                                     className="form-control"
-                                    id="username"
+                                    id="isbn"
+                                    name="isbn"
+                                    value={this.state.isbn}
+                                    onChange={this.fieldValueChange}
                                     placeholder="ISBN"
                                     required />
                                 <div className="invalid-feedback" style={{width: '100%'}}>
@@ -83,12 +145,19 @@ class Book_Add extends Component{
                     </div>
 
                     <div className="mb-3">
-                        <label for="username">Author</label>
+                        <label >Author</label>
                         <div className="input-group">
                             <div className="input-group-prepend">
                                 <span className="input-group-text"><IoIosPerson/></span>
                             </div>
-                            <select type="text" className="form-control" id="author" placeholder="Username" required >
+                            <select
+                                className="form-control"
+                                name="author"
+                                id="author"
+                                value={this.state.author}
+                                onChange={this.setAuthor}
+                                required >
+                                <option>Choose an Author...</option>
                                 {this.fillAuthor()}
                             </select>
                                 <div className="invalid-feedback" style={{width: '100%'}}>
@@ -107,6 +176,9 @@ class Book_Add extends Component{
                                 type="number"
                                 className="form-control"
                                 id="price"
+                                name="price"
+                                value={this.state.price}
+                                onChange={this.fieldValueChange}
                                 placeholder="Rs."
                                 required />
                             <div className="invalid-feedback" style={{width: '100%'}}>
@@ -126,6 +198,9 @@ class Book_Add extends Component{
                                 type="number"
                                 className="form-control"
                                 id="year"
+                                name="year"
+                                value={this.state.year}
+                                onChange={this.fieldValueChange}
                                 placeholder="Year"
                                 required/>
                             <div className="invalid-feedback" style={{width: '100%'}}>
@@ -145,6 +220,9 @@ class Book_Add extends Component{
                                 type="text"
                                 className="form-control"
                                 id="publisher"
+                                name="publisher"
+                                value={this.state.publisher}
+                                onChange={this.fieldValueChange}
                                 placeholder="Publisher"
                                 required/>
                             <div className="invalid-feedback" style={{width: '100%'}}>
@@ -156,7 +234,7 @@ class Book_Add extends Component{
 
 
                     <hr className="mb-4" />
-                    <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    <button className="btn btn-primary btn-lg btn-block" type="submit">Continue to Add</button>
                 </form>
             </div>
         )
