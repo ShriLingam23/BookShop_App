@@ -25,7 +25,7 @@ class Home extends Component{
                     <p>It uses utility classes for typography and spacing to space content out within the larger
                         container.</p>
                     <Link to='/book/add' className="btn btn-primary btn-lg" type="button">ADD</Link>
-                    <a className="btn btn-primary btn-lg" href="#" role="button" style={{margin:"50px"}}>VIEW</a>
+                    <Link to='/book/view' className="btn btn-primary btn-lg" type="button" style={{margin:"50px"}}>VIEW</Link>
                 </div>
 
             </main>

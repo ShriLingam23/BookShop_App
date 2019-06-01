@@ -75,11 +75,11 @@ class Book_Add extends Component{
         e.preventDefault();
 
         const book={
-            bookName: this.state.bookName,
+            name: this.state.bookName,
             isbn: parseInt(this.state.isbn),
             author: this.state.aid,
             price:parseInt(this.state.price),
-            year:parseInt(this.state.year),
+            yearOfPublication:parseInt(this.state.year),
             publisher: this.state.publisher
         }
 
