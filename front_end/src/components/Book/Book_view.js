@@ -12,13 +12,15 @@ class Book_view extends Component{
         }
 
         this.fillData= this.fillData.bind(this);
+        this.calcTotal= this.calcTotal.bind(this);
     }
 
     componentDidMount(){
         axios.get('http://localhost:4000/book/')
             .then(
                 (books)=>this.setState({
-                    books:books.data.data
+                    books:books.data.data,
+                    calculate:[]
                 })
             )
             .catch(
@@ -26,11 +28,27 @@ class Book_view extends Component{
             )
     }
 
-    fillData(){
-        console.log(this.state.books)
-        return this.state.books.map((book)=>{
-            return <BookRow key={book._id} book={book} />
+    onCheckboxClicked(id){
+        console.log(id)
+        const temp=this.state.calculate
+        temp.push(id);
+        console.log(temp)
+
+        this.setState({
+            calculate:temp
         })
+
+    }
+
+    fillData(){
+        //console.log(this.state.books)
+        return this.state.books.map((book)=>{
+            return <BookRow key={book._id} book={book} bookId={this.onCheckboxClicked.bind(this)}/>
+        })
+
+    }
+
+    calcTotal(){
 
     }
 
@@ -53,6 +71,9 @@ class Book_view extends Component{
                     {this.fillData()}
                     </tbody>
                 </table>
+                <hr className="col-md-4"/>
+                <a className="btn btn-warning" style={{color:'#FFF'}} onClick={this.calcTotal}>Calculate Total</a>
+                <hr className="col-md-4"/>
                 <Link to="/book/add" className="btn btn-lg btn-info" style={{marginTop:'50px'}}>ADD NEW BOOK</Link>
             </div>
         )

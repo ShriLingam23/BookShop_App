@@ -7,6 +7,12 @@ class Book_row extends Component{
         this.state={
             book: props.book
         }
+
+        this.onCheckboxClicked=this.onCheckboxClicked.bind(this);
+    }
+
+    onCheckboxClicked(e){
+        this.props.bookId(e.target.value)
     }
 
     render(){
@@ -20,6 +26,7 @@ class Book_row extends Component{
                 <td>{this.state.book.price}</td>
                 <td>{this.state.book.yearOfPublication}</td>
                 <td>{this.state.book.publisher}</td>
+                <td><input type="checkbox" value={this.state.book._id} onClick={this.onCheckboxClicked}></input></td>
             </tr>
         )
     }

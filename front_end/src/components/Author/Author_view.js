@@ -51,7 +51,7 @@ class Author_view extends Component{
                         {this.fillData()}
                     </tbody>
                 </table>
-                <Link to="/author/add" className="btn btn-lg btn-info">ADD NEW AUTHOR</Link>
+
             </div>
         )
     }
