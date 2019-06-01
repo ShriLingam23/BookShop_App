@@ -167,7 +167,7 @@ class Book_Add extends Component{
                     </div>
 
                     <div className="mb-3">
-                        <label for="email">Price <span className="text-muted">in Rupees</span></label>
+                        <label>Price <span className="text-muted">in Rupees</span></label>
                         <div className='input-group'>
                             <div className='input-group-prepend'>
                                 <span className="input-group-text"><IoIosPricetag/></span>

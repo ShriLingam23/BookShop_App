@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import{Link} from "react-router-dom";
 
 import AuthorRow from './Author_row'
 class Author_view extends Component{
@@ -50,6 +51,7 @@ class Author_view extends Component{
                         {this.fillData()}
                     </tbody>
                 </table>
+                <Link to="/author/add" className="btn btn-lg btn-info">ADD NEW AUTHOR</Link>
             </div>
         )
     }

@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import axios from 'axios';
 
 import BookRow from './Book_row'
+import {Link} from "react-router-dom";
 class Book_view extends Component{
 
     constructor(props){
@@ -52,6 +53,7 @@ class Book_view extends Component{
                     {this.fillData()}
                     </tbody>
                 </table>
+                <Link to="/book/add" className="btn btn-lg btn-info" style={{marginTop:'50px'}}>ADD NEW BOOK</Link>
             </div>
         )
     }
