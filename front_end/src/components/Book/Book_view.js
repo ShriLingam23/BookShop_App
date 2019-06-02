@@ -12,7 +12,9 @@ class Book_view extends Component{
             calculate:[],
             show:false,
             total:0.00,
-            authors:[]
+            authors:[],
+            filterData:[],
+            filter:false
         }
 
         this.fillData= this.fillData.bind(this);
@@ -20,6 +22,7 @@ class Book_view extends Component{
         this.checkBill= this.checkBill.bind(this);
 
         this.filterAuthor= this.filterAuthor.bind(this);
+        this.resetFilter= this.resetFilter.bind(this);
     }
 
     componentDidMount(){
@@ -71,9 +74,16 @@ class Book_view extends Component{
 
     fillData(){
         //console.log(this.state.books)
-        return this.state.books.map((book)=>{
-            return <BookRow key={book._id} book={book} bookId={this.onCheckboxClicked.bind(this)}/>
-        })
+        if(!this.state.filter){
+            return this.state.books.map((book)=>{
+                return <BookRow key={book._id} book={book} bookId={this.onCheckboxClicked.bind(this)}/>
+            })
+        }
+        else{
+            return this.state.filterData.map((book)=>{
+                return <BookRow key={book._id} book={book} bookId={this.onCheckboxClicked.bind(this)}/>
+            })
+        }
 
     }
 
@@ -123,6 +133,28 @@ class Book_view extends Component{
 
         const AuthorId = this.state.authors[index-1]._id;
         console.log(AuthorId);
+
+
+        axios.get('http://localhost:4000/book/filter/'+AuthorId)
+            .then(
+                (res)=>{
+                    this.setState({
+                        filterData:res.data.data,
+                        filter:true
+                    })
+                }
+            )
+
+    }
+
+    resetFilter(){
+        this.setState({
+            filter:false,
+            filterData:[]
+        })
+
+        const authorOption = document.getElementById("author");
+        authorOption.selectedIndex=0;
     }
 
     render(){
@@ -140,7 +172,7 @@ class Book_view extends Component{
                         <button className="btn btn-primary form-control" onClick={this.filterAuthor}>Filter</button>
                     </div>
                     <div className="col-md-2">
-                        <button className="btn btn-danger form-control">Reset</button>
+                        <button className="btn btn-danger form-control" onClick={this.resetFilter}>Reset</button>
                     </div>
                 </div>
 
