@@ -9,11 +9,14 @@ class Book_view extends Component{
         super(props);
         this.state={
             books:[],
-            calculate:[]
+            calculate:[],
+            show:false,
+            total:0.00
         }
 
         this.fillData= this.fillData.bind(this);
         this.calcTotal= this.calcTotal.bind(this);
+        this.checkBill= this.checkBill.bind(this);
     }
 
     componentDidMount(){
@@ -53,8 +56,41 @@ class Book_view extends Component{
     calcTotal(){
         axios.post('http://localhost:8080/book/calculate/',this.state.calculate)
             .then(
-                (res)=>console.log(res.data)
+                (res)=>{
+                    console.log(res.data)
+                    this.setState({
+                                            total:res.data,
+                                            show:true
+                                        })
+
+                }
             )
+    }
+
+    checkBill(){
+        if(this.state.show){
+            return(
+                <div className="card mb-4 shadow-sm">
+                    <div className="card-header">
+                        <h4 className="my-0 font-weight-normal">Pro</h4>
+                    </div>
+                    <div className="card-body">
+                        <h1 className="card-title pricing-card-title">Rs.{this.state.total} <small className="text-muted">/ mo</small>
+                        </h1>
+                        <ul className="list-unstyled mt-3 mb-4">
+                            <li>20 users included</li>
+                            <li>10 GB of storage</li>
+                            <li>Priority email support</li>
+                            <li>Help center access</li>
+                        </ul>
+                        <button
+                            type="button"
+                            className="btn btn-lg btn-primary"
+                            onClick={()=>{this.setState({show:false,total:0.00})}}>Close</button>
+                    </div>
+                </div>
+            )
+        }
     }
 
     render(){
@@ -77,6 +113,7 @@ class Book_view extends Component{
                     </tbody>
                 </table>
                 <hr className="col-md-4"/>
+                {this.checkBill()}
                 <a className="btn btn-warning" style={{color:'#FFF'}} onClick={this.calcTotal}>Calculate Total</a>
                 <hr className="col-md-4"/>
                 <Link to="/book/add" className="btn btn-lg btn-info" style={{marginTop:'50px'}}>ADD NEW BOOK</Link>
