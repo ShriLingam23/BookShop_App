@@ -54,5 +54,15 @@ router.delete('/:id',(req,res)=>{
         )
 })
 
+router.get('/filter/:id',(req,res)=>{
+    BookSchema.find({author:req.params.id}).populate('author').exec()
+        .then(
+            (book)=>res.status(200).send({'message':"Successfully retrived","data":book})
+        )
+        .catch(
+            (err)=>res.status(400).send({'message':"Unsuccessful"+err})
+        )
+})
+
 
 module.exports= router;

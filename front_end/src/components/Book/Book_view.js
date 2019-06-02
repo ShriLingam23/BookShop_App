@@ -11,12 +11,15 @@ class Book_view extends Component{
             books:[],
             calculate:[],
             show:false,
-            total:0.00
+            total:0.00,
+            authors:[]
         }
 
         this.fillData= this.fillData.bind(this);
         this.calcTotal= this.calcTotal.bind(this);
         this.checkBill= this.checkBill.bind(this);
+
+        this.filterAuthor= this.filterAuthor.bind(this);
     }
 
     componentDidMount(){
@@ -29,6 +32,27 @@ class Book_view extends Component{
             .catch(
                 (err)=>console.log(err)
             )
+
+
+        axios.get('http://localhost:4000/author/')
+            .then(
+                (authors)=>this.setState({
+                    authors:authors.data.data
+                })
+            )
+            .catch(
+                (err)=>console.log(err)
+            )
+    }
+
+
+    fillAuthor(){
+
+        return this.state.authors.map((author)=>{
+            return(
+                <option key={author._id}>{author.firstName +" "+author.lastName}</option>
+            )
+        })
     }
 
     onCheckboxClicked(id){
@@ -72,7 +96,7 @@ class Book_view extends Component{
             return(
                 <div className="card mb-4 shadow-sm">
                     <div className="card-header">
-                        <h4 className="my-0 font-weight-normal">Pro</h4>
+                        <h4 className="my-0 font-weight-normal">Book Billing Invoice</h4>
                     </div>
                     <div className="card-body">
                         <h1 className="card-title pricing-card-title">Rs.{this.state.total} <small className="text-muted">/ mo</small>
@@ -93,11 +117,34 @@ class Book_view extends Component{
         }
     }
 
+    filterAuthor(){
+        const authorOption = document.getElementById("author");
+        const index = authorOption.selectedIndex;
+
+        const AuthorId = this.state.authors[index-1]._id;
+        console.log(AuthorId);
+    }
+
     render(){
 
         return(
             <div className="container" style={{marginTop:'100px'}}>
-                <table className="table">
+                <div className="row">
+                    <div className="col-md-8">
+                        <select className="form-control" id="author">
+                            <option>Choose an Author...</option>
+                            {this.fillAuthor()}
+                        </select>
+                    </div>
+                    <div className="col-md-2">
+                        <button className="btn btn-primary form-control" onClick={this.filterAuthor}>Filter</button>
+                    </div>
+                    <div className="col-md-2">
+                        <button className="btn btn-danger form-control">Reset</button>
+                    </div>
+                </div>
+
+                <table className="table" style={{marginTop:'50px'}}>
                     <thead>
                     <tr>
                         <th scope="col">Book ISBN</th>

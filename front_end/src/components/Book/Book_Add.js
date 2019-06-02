@@ -47,7 +47,7 @@ class Book_Add extends Component{
 
         return this.state.authors.map((author)=>{
           return(
-              <option key={author._id} data-aid={author.id}>{author.firstName +" "+author.lastName}</option>
+              <option key={author._id}>{author.firstName +" "+author.lastName}</option>
           )
         })
     }
