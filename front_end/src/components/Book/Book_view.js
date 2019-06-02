@@ -8,7 +8,8 @@ class Book_view extends Component{
     constructor(props){
         super(props);
         this.state={
-            books:[]
+            books:[],
+            calculate:[]
         }
 
         this.fillData= this.fillData.bind(this);
@@ -19,8 +20,7 @@ class Book_view extends Component{
         axios.get('http://localhost:4000/book/')
             .then(
                 (books)=>this.setState({
-                    books:books.data.data,
-                    calculate:[]
+                    books:books.data.data
                 })
             )
             .catch(
@@ -32,11 +32,13 @@ class Book_view extends Component{
         console.log(id)
         const temp=this.state.calculate
         temp.push(id);
-        console.log(temp)
+
 
         this.setState({
             calculate:temp
         })
+
+        console.log(this.state.calculate)
 
     }
 
@@ -49,7 +51,10 @@ class Book_view extends Component{
     }
 
     calcTotal(){
-
+        axios.post('http://localhost:8080/book/calculate/',this.state.calculate)
+            .then(
+                (res)=>console.log(res.data)
+            )
     }
 
     render(){
