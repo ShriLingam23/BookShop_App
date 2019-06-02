@@ -58,10 +58,14 @@ class Book_view extends Component{
         })
     }
 
-    onCheckboxClicked(id){
-        console.log(id)
+    onCheckboxClicked(id,bool){
+        console.log(id,bool)
         const temp=this.state.calculate
-        temp.push(id);
+
+        if(bool)
+            temp.push(id);
+        else
+            temp.splice(id,1)
 
 
         this.setState({
@@ -94,7 +98,8 @@ class Book_view extends Component{
                     console.log(res.data)
                     this.setState({
                                             total:res.data,
-                                            show:true
+                                            show:true,
+                                            calculate:[]
                                         })
 
                 }
@@ -131,19 +136,21 @@ class Book_view extends Component{
         const authorOption = document.getElementById("author");
         const index = authorOption.selectedIndex;
 
-        const AuthorId = this.state.authors[index-1]._id;
-        console.log(AuthorId);
+        if(index!=0){
+            const AuthorId = this.state.authors[index-1]._id;
+            console.log(AuthorId);
 
 
-        axios.get('http://localhost:4000/book/filter/'+AuthorId)
-            .then(
-                (res)=>{
-                    this.setState({
-                        filterData:res.data.data,
-                        filter:true
-                    })
-                }
-            )
+            axios.get('http://localhost:4000/book/filter/'+AuthorId)
+                .then(
+                    (res)=>{
+                        this.setState({
+                            filterData:res.data.data,
+                            filter:true
+                        })
+                    }
+                )
+        }
 
     }
 

@@ -12,7 +12,7 @@ class Book_row extends Component{
     }
 
     onCheckboxClicked(e){
-        this.props.bookId(e.target.value)
+        this.props.bookId(e.target.value,e.target.checked)
     }
 
     render(){

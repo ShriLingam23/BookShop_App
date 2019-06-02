@@ -88,6 +88,15 @@ class Book_Add extends Component{
             .then(
                 (res)=>{
                     console.log(res.data.message,res.data.data)
+                    this.setState({
+                        bookName:'',
+                        isbn:'',
+                        author:'',
+                        price:'',
+                        year:'',
+                        publisher:'',
+                        aid:''
+                    })
                 }
             )
 
