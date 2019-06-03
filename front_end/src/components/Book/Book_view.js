@@ -23,6 +23,8 @@ class Book_view extends Component{
 
         this.filterAuthor= this.filterAuthor.bind(this);
         this.resetFilter= this.resetFilter.bind(this);
+
+        this.fillInvoice = this.fillInvoice.bind(this);
     }
 
     componentDidMount(){
@@ -98,12 +100,24 @@ class Book_view extends Component{
                     console.log(res.data)
                     this.setState({
                                             total:res.data,
-                                            show:true,
-                                            calculate:[]
+                                            show:true
                                         })
 
                 }
             )
+    }
+
+    fillInvoice(){
+
+        return this.state.calculate.map((id)=>{
+            let priceList=this.state.books.map((book)=>{
+                if(book._id==id)
+                    return <li>{book.name} : {book.price}</li>
+            })
+
+            return priceList;
+        })
+
     }
 
     checkBill(){
@@ -117,10 +131,7 @@ class Book_view extends Component{
                         <h1 className="card-title pricing-card-title">Rs.{this.state.total} <small className="text-muted">/ mo</small>
                         </h1>
                         <ul className="list-unstyled mt-3 mb-4">
-                            <li>20 users included</li>
-                            <li>10 GB of storage</li>
-                            <li>Priority email support</li>
-                            <li>Help center access</li>
+                            {this.fillInvoice()}
                         </ul>
                         <button
                             type="button"
@@ -164,6 +175,7 @@ class Book_view extends Component{
         authorOption.selectedIndex=0;
     }
 
+
     render(){
 
         return(
@@ -183,8 +195,8 @@ class Book_view extends Component{
                     </div>
                 </div>
 
-                <table className="table" style={{marginTop:'50px'}}>
-                    <thead>
+                <table className="table table-striped" style={{marginTop:'50px'}}>
+                    <thead className="thead-dark">
                     <tr>
                         <th scope="col">Book ISBN</th>
                         <th scope="col">Book Name</th>
@@ -192,6 +204,7 @@ class Book_view extends Component{
                         <th scope="col">Price</th>
                         <th scope="col">Year of Published</th>
                         <th scope="col">Publication</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
